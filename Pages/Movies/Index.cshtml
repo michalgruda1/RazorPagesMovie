@@ -6,11 +6,22 @@
 }
 
 <h1>Index</h1>
+<form>
+    <p>
+        Genre:
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+        Title: <input type="text" asp-for="SearchString" />
+    </p>
+    <input type="submit" value="Filter" />
+</form>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
 @System.Globalization.CultureInfo.CurrentUICulture
+<div asp-validation-summary="All" class="text-danger"></div>
 <table class="table">
     <thead>
         <tr>

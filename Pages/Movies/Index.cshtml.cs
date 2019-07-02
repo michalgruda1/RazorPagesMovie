@@ -27,14 +27,20 @@ namespace RazorPagesMovie.Pages.Movies
 
 		public async Task OnGetAsync()
 		{
-			var movies = _context.Movie.Select(m => m);
+			var Movies = _context.Movie.Select(m => m);
+			Genres = new SelectList(await Movies.Select(m => m.Genre).Distinct().ToListAsync());
 
 			if (!string.IsNullOrEmpty(SearchString) && SearchString.Trim().Length > 0)
 			{
-				movies = movies.Where(m => m.Title.ToUpperInvariant().Contains(SearchString.ToUpperInvariant()));
+				Movies = Movies.Where(m => m.Title.ToUpperInvariant().Contains(SearchString.ToUpperInvariant()));
 			}
 
-			Movie = await movies.ToListAsync();
+			if (!string.IsNullOrEmpty(MovieGenre))
+			{
+				Movies = Movies.Where(m => m.Genre == MovieGenre);
+			}
+
+			Movie = await Movies.ToListAsync();
 		}
 	}
 }
